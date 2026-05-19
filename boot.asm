@@ -54,5 +54,4 @@ gdt_end:
 
 gdt_desc:
     dw gdt_end - gdt_start - 1
-    dd gdt_start
-Вообще я все уже написал но лусше подожжу чтобы поверили
+    dd 
