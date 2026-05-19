@@ -1,0 +1,19 @@
+CC = i686-elf-gcc
+CFLAGS = -ffreestanding -nostdlib -O2
+
+all: kernel.bin
+
+boot.o: boot.asm
+	nasm -f elf32 boot.asm -o boot.o
+
+kernel.o: kernel.c
+	$(CC) -c kernel.c -o kernel.o $(CFLAGS)
+
+kernel.bin: boot.o kernel.o
+	$(CC) -T linker.ld -o kernel.bin boot.o kernel.o $(CFLAGS) -nostdlib -lgcc
+
+clean:
+	rm -f *.o *.bin
+
+run:
+	qemu-system-x86_64 -kernel kernel.bin
